@@ -1,0 +1,19 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor folders
+.idea/
+.vscode/
+*.swp
+
+# Local notes / temp
+*.log
+*.tmp
+
+# Large unnecessary files (if any)
+*.psd
+*.ai
+
+# Vercel
+.vercel
