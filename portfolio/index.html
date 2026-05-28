@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matanda Justus • Full-Stack &amp; Mobile Developer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+
+    :root {
+      --accent: #c17d5a; /* Warm terracotta accent - calmer, more artistic */
+    }
+
+    body {
+      font-family: 'Inter', system_ui, sans-serif;
+      background-color: #121110; /* Warmer dark base */
+    }
+
+    .heading-font {
+      font-family: 'Space Grotesk', 'Inter', system_ui, sans-serif;
+      font-feature-settings: "ss02";
+    }
+
+    .section-header {
+      font-size: 2.25rem;
+      line-height: 1.1;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+    }
+
+    .nav-link {
+      position: relative;
+      transition: color 0.2s ease;
+    }
+    
+    .nav-link:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background: linear-gradient(to right, #c17d5a, #a67c6a);
+      transition: width 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .nav-link:hover:after,
+    .nav-link.active:after {
+      width: 100%;
+    }
+
+    .glass {
+      background: rgba(10, 10, 10, 0.65);
+      backdrop-filter: blur(20px);
+    }
+
+    .card {
+      transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), 
+                  box-shadow 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+                  border-color 0.2s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+
+    .skill-pill {
+      transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .skill-pill:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 10px 15px -3px rgb(99 102 241 / 0.15);
+    }
+
+    .project-card {
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .project-card:hover {
+      transform: translateY(-10px);
+    }
+    
+    .project-card:hover .project-image {
+      transform: scale(1.05);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .stagger-1 { transition-delay: 80ms; }
+    .stagger-2 { transition-delay: 160ms; }
+    .stagger-3 { transition-delay: 240ms; }
+    .stagger-4 { transition-delay: 320ms; }
+
+    .timeline-dot {
+      transition: all 0.3s ease;
+    }
+    
+    .timeline-item:hover .timeline-dot {
+      background-color: #c17d5a;
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+    }
+
+    .nav-scrolled {
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom-color: #27272a;
+    }
+
+    .stat-number {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .accent-gradient {
+      background: linear-gradient(135deg, #c17d5a, #a67c6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtle-grid {
+      background-image: 
+        linear-gradient(rgba(63, 66, 243, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(63, 66, 243, 0.035) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-bg {
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.05) 0%, transparent 60%);
+    }
+
+    .tech-tag {
+      font-size: 0.75rem;
+      padding: 2px 10px;
+      border-radius: 9999px;
+      background: #18181b;
+      color: #a1a1aa;
+      transition: all 0.2s ease;
+    }
+
+    .section {
+      scroll-margin-top: 80px;
+    }
+
+    .smooth-scroll {
+      scroll-behavior: smooth;
+    }
+
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .terminal-line {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+  </style>
+</head>
+<body class="bg-[#0a0a0a] text-zinc-200 smooth-scroll overflow-x-hidden">
+  <!-- Navbar -->
+  <nav id="nav" class="fixed top-0 left-0 right-0 z-50 border-b border-zinc-900 transition-all duration-300">
+    <div class="max-w-screen-2xl mx-auto">
+      <div class="px-8 h-20 flex items-center justify-between">
+        <div class="flex items-center">
+          <img src="./logo-nav.png" alt="Matanda Justus" class="h-[42px] w-auto">
+        </div>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center gap-x-10 text-sm">
+          <a href="#about" class="nav-link text-zinc-400 hover:text-zinc-100 px-1 py-2 text-[0.925rem]">About</a>
+          <a href="#work" class="nav-link text-zinc-400 hover:text-zinc-100 px-1 py-2 text-[0.925rem]">Work</a>
+          <a href="#tech" class="nav-link text-zinc-400 hover:text-zinc-100 px-1 py-2 text-[0.925rem]">Tech</a>
+          <a href="#writing" class="nav-link text-zinc-400 hover:text-zinc-100 px-1 py-2 text-[0.925rem]">Writing</a>
+          <a href="resume.html" class="nav-link text-zinc-400 hover:text-zinc-100 px-1 py-2 text-[0.925rem]">Resume</a>
+        </div>
+
+        <div class="hidden md:flex items-center gap-x-3">
+          <a href="https://github.com/mxtxndx" target="_blank"
+             class="flex items-center gap-x-2 px-4 py-2 text-sm rounded-2xl border border-zinc-800 hover:bg-zinc-900 transition-colors">
+            <i class="fa-brands fa-github"></i>
+            <span>GitHub</span>
+          </a>
+          <button onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })"
+                  class="px-5 py-2 text-sm font-medium bg-[#c17d5a] text-white rounded-2xl hover:bg-[#a67c6a] transition-all active:scale-[0.985]">
+            Get in touch
+          </button>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn"
+                class="md:hidden w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white transition-colors"
+                aria-label="Toggle menu">
+          <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-zinc-900 bg-[#0a0a0a]">
+      <div class="px-6 py-6 flex flex-col gap-y-4 text-sm">
+        <a href="#about" class="mobile-link py-2 text-zinc-400 hover:text-white">About</a>
+        <a href="#work" class="mobile-link py-2 text-zinc-400 hover:text-white">Work</a>
+        <a href="#tech" class="mobile-link py-2 text-zinc-400 hover:text-white">Tech</a>
+        <a href="#writing" class="mobile-link py-2 text-zinc-400 hover:text-white">Writing</a>
+        <a href="resume.html" class="mobile-link py-2 text-zinc-400 hover:text-white">Resume</a>
+        <div class="pt-4 border-t border-zinc-800 flex flex-col gap-y-3">
+          <a href="https://github.com/mxtxndx" target="_blank" class="flex items-center gap-x-2 py-2 text-zinc-400">
+            <i class="fa-brands fa-github w-5"></i> GitHub
+          </a>
+          <button onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' }); closeMobileMenu()"
+                  class="w-full mt-2 py-3 rounded-2xl bg-[#c17d5a] text-white font-medium text-sm">
+            Get in touch
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="pt-20 relative">
+    <div class="max-w-screen-2xl mx-auto px-8 pt-16 pb-20">
+      <div class="grid md:grid-cols-12 gap-x-8 items-center">
+        <!-- Text Content -->
+        <div class="md:col-span-7 lg:col-span-7">
+          <div class="inline-flex items-center gap-x-2 px-4 h-8 rounded-2xl border border-zinc-800 bg-zinc-900/60 mb-8">
+            <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+            <span class="text-sm text-zinc-400">Open to opportunities &amp; collaborations</span>
+          </div>
+
+          <h1 class="text-6xl md:text-7xl lg:text-7xl font-semibold tracking-tighter heading-font leading-[1.05]">
+            Matanda Justus
+          </h1>
+          
+          <p class="mt-3 text-2xl md:text-3xl text-zinc-400 tracking-tight">
+            Full-Stack &amp; Mobile Developer
+          </p>
+
+          <div class="flex flex-wrap gap-2 mt-5">
+            <div class="px-4 py-1 text-sm rounded-2xl border border-zinc-800 bg-zinc-900/60 text-zinc-300">React</div>
+            <div class="px-4 py-1 text-sm rounded-2xl border border-zinc-800 bg-zinc-900/60 text-zinc-300">Flutter</div>
+            <div class="px-4 py-1 text-sm rounded-2xl border border-zinc-800 bg-zinc-900/60 text-zinc-300">Supabase</div>
+            <div class="px-4 py-1 text-sm rounded-2xl border border-zinc-800 bg-zinc-900/60 text-zinc-300">Football Analytics</div>
+          </div>
+
+          <p class="mt-6 max-w-lg text-[15.5px] text-zinc-400 leading-relaxed">
+            Computer Science student at Kampala International University. I build scalable digital systems that combine clean engineering, intuitive design, and real-world functionality.
+          </p>
+
+          <div class="mt-9 flex flex-wrap items-center gap-x-4 gap-y-4">
+            <button onclick="document.getElementById('work').scrollIntoView({ behavior: 'smooth' })"
+                    class="group flex items-center gap-x-3 px-8 h-14 bg-[#c17d5a] text-white font-semibold rounded-3xl hover:bg-[#a67c6a] active:scale-[0.985] transition-all">
+              View projects
+              <i class="fa-solid fa-arrow-right group-hover:translate-x-0.5 transition-transform"></i>
+            </button>
+            
+            <a href="#contact" 
+               class="flex items-center gap-x-3 px-7 h-14 border border-zinc-800 hover:bg-zinc-900 rounded-3xl transition-all text-sm font-medium">
+              <span>Get in touch</span>
+            </a>
+            
+            <a href="resume.html" target="_blank"
+               class="flex items-center gap-x-2.5 pl-5 pr-6 h-14 text-sm font-medium text-zinc-400 hover:text-zinc-200 transition-colors">
+              <i class="fa-solid fa-download"></i>
+              <span>View Resume</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Portrait -->
+        <div class="md:col-span-5 lg:col-span-5 mt-12 md:mt-0 relative">
+          <div class="relative mx-auto md:ml-auto w-full max-w-[380px]">
+            <div class="aspect-square rounded-[3.25rem] overflow-hidden border border-zinc-800 shadow-2xl shadow-black/40 relative">
+              <img src="./profile.jpg" alt="Matanda Justus" 
+                   class="w-full h-full object-cover grayscale-[0.08]">
+              <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30"></div>
+            </div>
+            
+            <!-- Floating accent badge -->
+            <div class="absolute -bottom-3 -left-3 bg-[#1f1c1b] border border-zinc-800 rounded-2xl px-4 py-3 shadow-xl flex items-center gap-x-3">
+              <div>
+                <div class="text-xs text-zinc-500">Currently studying</div>
+                <div class="font-medium text-sm tracking-tight">Computer Science, KIU</div>
+              </div>
+            </div>
+            
+            <!-- Decorative element -->
+            <div class="hidden xl:block absolute -top-4 -right-4 w-20 h-20 border border-zinc-800 rounded-3xl"></div>
+            
+            <!-- Elegant floating terminal hint -->
+            <div class="hidden 2xl:flex absolute -bottom-2 right-6 bg-zinc-900/95 border border-zinc-800 rounded-2xl px-4 py-2.5 text-[10px] font-mono items-center gap-x-2 shadow-xl">
+              <div class="flex items-center gap-x-1.5">
+                <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+                <span class="text-emerald-400">building</span>
+              </div>
+              <span class="text-zinc-500">/uganda-systems</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- About -->
+  <section id="about" class="section max-w-screen-2xl mx-auto px-8 pt-10 pb-24 border-t border-zinc-900">
+    <div class="grid md:grid-cols-12 gap-x-12 items-start">
+      <div class="md:col-span-4">
+        <div class="sticky top-24">
+          <span class="text-xs uppercase tracking-[3px] text-zinc-500 font-medium">About me</span>
+          <h2 class="section-header mt-3 leading-none">I build systems<br>that actually work.</h2>
+        </div>
+      </div>
+      
+      <div class="md:col-span-8 mt-8 md:mt-0 max-w-2xl">
+        <div class="text-[15.5px] text-zinc-300 leading-relaxed space-y-6">
+          <p>I am a Computer Science student at Kampala International University passionate about building scalable digital systems that combine clean engineering, intuitive design, and practical real-world functionality.</p>
+          
+          <p>My work focuses on full-stack web and mobile development using modern technologies such as React, Flutter, Supabase, PostgreSQL, and Tailwind CSS. I enjoy architecting systems from the ground up — from database structure and backend logic to frontend user experience and workflow optimization.</p>
+
+          <p>Alongside software engineering, I specialize in football analytics and technical writing. I produce tactical analysis, scouting reports, and long-form football breakdowns using advanced metrics such as xG, xA, PAdj, and possession-chain analysis. This combination of analytical thinking and software development shapes how I approach problem-solving: structured, data-driven, and user-focused.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What I Do -->
+  <section class="section max-w-screen-2xl mx-auto px-8 py-20 bg-[#1a1817] border-y border-zinc-800">
+    <div class="max-w-5xl">
+      <span class="text-xs uppercase tracking-[3px] text-zinc-500 font-medium">What I do</span>
+      <h2 class="section-header mt-2">How I create value</h2>
+    </div>
+
+    <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-[#1f1c1b] border border-zinc-800 rounded-3xl p-7 reveal">
+        <div class="w-10 h-10 flex items-center justify-center rounded-2xl bg-[#c17d5a]/10 text-[#c17d5a] mb-5">
+          <i class="fa-solid fa-globe text-xl"></i>
+        </div>
+        <h3 class="font-semibold text-lg">Full-Stack Development</h3>
+        <p class="mt-3 text-[14.5px] text-zinc-400">Building scalable web applications with modern frontend frameworks, backend systems, and secure database architecture.</p>
+      </div>
+
+      <div class="bg-[#1f1c1b] border border-zinc-800 rounded-3xl p-7 reveal stagger-1">
+        <div class="w-10 h-10 flex items-center justify-center rounded-2xl bg-[#a67c6a]/10 text-[#a67c6a] mb-5">
+          <i class="fa-solid fa-mobile-screen text-xl"></i>
+        </div>
+        <h3 class="font-semibold text-lg">Mobile App Development</h3>
+        <p class="mt-3 text-[14.5px] text-zinc-400">Developing responsive cross-platform mobile applications using Flutter and Dart with beautiful, performant UIs.</p>
+      </div>
+
+      <div class="bg-[#1f1c1b] border border-zinc-800 rounded-3xl p-7 reveal stagger-2">
+        <div class="w-10 h-10 flex items-center justify-center rounded-2xl bg-teal-500/10 text-teal-400 mb-5">
+          <i class="fa-solid fa-database text-xl"></i>
+        </div>
+        <h3 class="font-semibold text-lg">Database &amp; System Design</h3>
+        <p class="mt-3 text-[14.5px] text-zinc-400">Designing relational database systems, optimized workflows, and scalable architectures tailored for practical environments.</p>
+      </div>
+
+      <div class="bg-[#1f1c1b] border border-zinc-800 rounded-3xl p-7 reveal stagger-3">
+        <div class="w-10 h-10 flex items-center justify-center rounded-2xl bg-amber-500/10 text-amber-400 mb-5">
+          <i class="fa-solid fa-chart-line text-xl"></i>
+        </div>
+        <h3 class="font-semibold text-lg">Football Analytics &amp; Writing</h3>
+        <p class="mt-3 text-[14.5px] text-zinc-400">Creating tactical reports, scouting analysis, and data-driven football content using advanced metrics and structured analysis.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack -->
+  <section id="tech" class="section max-w-screen-2xl mx-auto px-8 py-20">
+    <div class="max-w-5xl">
+      <span class="text-xs uppercase tracking-[3px] text-zinc-500 font-medium">Tech stack</span>
+      <h2 class="section-header mt-2">Tools I use to build</h2>
+    </div>
+
+    <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-3">
+      <!-- Frontend -->
+      <div class="bg-[#1f1c1b] border border-zinc-800 rounded-3xl p-7">
+        <div class="flex items-center gap-x-2 text-sm font-medium text-zinc-400 mb-5">
+          <i class="fa-solid fa-code w-4"></i>
+          <span>Frontend</span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">React</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">Vite</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">Tailwind CSS</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">JavaScript (ES6+)</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">HTML5</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">CSS3</div>
+        </div>
+      </div>
+
+      <!-- Mobile -->
+      <div class="bg-[#1f1c1b] border border-zinc-800 rounded-3xl p-7">
+        <div class="flex items-center gap-x-2 text-sm font-medium text-zinc-400 mb-5">
+          <i class="fa-solid fa-mobile-alt w-4"></i>
+          <span>Mobile</span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">Flutter</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">Dart</div>
+        </div>
+      </div>
+
+      <!-- Backend & Database -->
+      <div class="bg-[#1f1c1b] border border-zinc-800 rounded-3xl p-7">
+        <div class="flex items-center gap-x-2 text-sm font-medium text-zinc-400 mb-5">
+          <i class="fa-solid fa-server w-4"></i>
+          <span>Backend &amp; Database</span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">Supabase</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">PostgreSQL</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">REST APIs</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">Relational DB Design</div>
+        </div>
+      </div>
+
+      <!-- Tools & Workflow -->
+      <div class="bg-[#1f1c1b] border border-zinc-800 rounded-3xl p-7">
+        <div class="flex items-center gap-x-2 text-sm font-medium text-zinc-400 mb-5">
+          <i class="fa-solid fa-tools w-4"></i>
+          <span>Tools &amp; Workflow</span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">Git &amp; GitHub</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">System Architecture</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">Agile Development</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">Technical Documentation</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">UI/UX Workflow Design</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Projects -->
+  <section id="work" class="section max-w-screen-2xl mx-auto px-8 py-16 border-t border-zinc-900">
+    <div class="flex items-end justify-between mb-10">
+      <div>
+        <span class="text-xs uppercase tracking-[3px] text-zinc-500 font-medium">Featured projects</span>
+        <h2 class="section-header mt-2">Things I’ve built</h2>
+      </div>
+      <a href="https://github.com/mxtxndx" target="_blank" 
+         class="hidden md:flex items-center gap-x-2 text-sm text-zinc-400 hover:text-white transition-colors">
+        View more on GitHub <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
+      </a>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Hospital Management System -->
+      <div class="project-card group bg-[#1f1c1b] border border-zinc-800 rounded-3xl overflow-hidden flex flex-col">
+        <div class="h-2 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+        <div class="p-7 flex-1">
+          <div class="flex items-start justify-between">
+            <div>
+              <h3 class="font-semibold text-2xl tracking-tight">Hospital Management System</h3>
+              <p class="text-zinc-400 text-sm mt-1">Healthcare • Uganda</p>
+            </div>
+          </div>
+          
+          <p class="mt-5 text-[14.5px] text-zinc-300 leading-relaxed">A comprehensive healthcare platform developed for Ugandan health centers. Built with React, Supabase, PostgreSQL, and Tailwind CSS.</p>
+          
+          <div class="mt-6">
+            <div class="text-xs uppercase tracking-wider text-zinc-500 mb-2">Key features</div>
+            <ul class="text-sm text-zinc-400 space-y-1">
+              <li class="flex gap-2"><span class="text-emerald-400 mt-1">•</span> Patient records management</li>
+              <li class="flex gap-2"><span class="text-emerald-400 mt-1">•</span> Audit logging &amp; compliance</li>
+              <li class="flex gap-2"><span class="text-emerald-400 mt-1">•</span> Medical inventory systems</li>
+              <li class="flex gap-2"><span class="text-emerald-400 mt-1">•</span> Secure architecture (Uganda Data Protection &amp; Privacy Act 2019)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="px-7 py-5 border-t border-zinc-800 flex items-center justify-between text-sm">
+          <div class="flex gap-2">
+            <span class="tech-tag">React</span>
+            <span class="tech-tag">Supabase</span>
+            <span class="tech-tag">PostgreSQL</span>
+          </div>
+          <a href="https://github.com/mxtxndx" target="_blank" class="text-zinc-400 hover:text-white transition-colors"><i class="fa-brands fa-github text-lg"></i></a>
+        </div>
+      </div>
+
+      <!-- Primary School Management System -->
+      <div class="project-card group bg-[#1f1c1b] border border-zinc-800 rounded-3xl overflow-hidden flex flex-col">
+        <div class="h-2 bg-gradient-to-r from-[#c17d5a] to-[#a67c6a]"></div>
+        <div class="p-7 flex-1">
+          <div class="flex items-start justify-between">
+            <div>
+              <h3 class="font-semibold text-2xl tracking-tight">Primary School Management</h3>
+              <p class="text-zinc-400 text-sm mt-1">Education • Uganda</p>
+            </div>
+          </div>
+          
+          <p class="mt-5 text-[14.5px] text-zinc-300 leading-relaxed">A complete school management platform designed specifically around the Ugandan P1–P7 educational structure and local administrative needs.</p>
+          
+          <div class="mt-6">
+            <div class="text-xs uppercase tracking-wider text-zinc-500 mb-2">Key features</div>
+            <ul class="text-sm text-zinc-400 space-y-1">
+              <li class="flex gap-2"><span class="text-sky-400 mt-1">•</span> Student profiling &amp; records</li>
+              <li class="flex gap-2"><span class="text-sky-400 mt-1">•</span> Attendance management</li>
+              <li class="flex gap-2"><span class="text-sky-400 mt-1">•</span> Academic report generation</li>
+              <li class="flex gap-2"><span class="text-sky-400 mt-1">•</span> Administrative workflow systems</li>
+            </ul>
+          </div>
+        </div>
+        <div class="px-7 py-5 border-t border-zinc-800 flex items-center justify-between text-sm">
+          <div class="flex gap-2">
+            <span class="tech-tag">React</span>
+            <span class="tech-tag">Supabase</span>
+            <span class="tech-tag">Tailwind</span>
+          </div>
+          <a href="#" class="text-zinc-400 hover:text-white transition-colors"><i class="fa-brands fa-github text-lg"></i></a>
+        </div>
+      </div>
+
+      <!-- Football Scouting & Tactical Analysis -->
+      <div class="project-card group bg-[#1f1c1b] border border-zinc-800 rounded-3xl overflow-hidden flex flex-col">
+        <div class="h-2 bg-gradient-to-r from-amber-500 to-orange-500"></div>
+        <div class="p-7 flex-1">
+          <div class="flex items-start justify-between">
+            <div>
+              <h3 class="font-semibold text-2xl tracking-tight">Football Scouting &amp; Analysis</h3>
+              <p class="text-zinc-400 text-sm mt-1">Sports Analytics</p>
+            </div>
+          </div>
+          
+          <p class="mt-5 text-[14.5px] text-zinc-300 leading-relaxed">A structured football-analysis platform and writing workflow focused on recruitment-grade scouting reports and tactical breakdowns.</p>
+          
+          <div class="mt-6">
+            <div class="text-xs uppercase tracking-wider text-zinc-500 mb-2">Analysis areas</div>
+            <div class="flex flex-wrap gap-2">
+              <span class="tech-tag">xG &amp; xA</span>
+              <span class="tech-tag">PAdj</span>
+              <span class="tech-tag">Possession chains</span>
+              <span class="tech-tag">Tactical profiling</span>
+              <span class="tech-tag">Recruitment reports</span>
+            </div>
+          </div>
+        </div>
+        <div class="px-7 py-5 border-t border-zinc-800 flex items-center justify-between text-sm">
+          <div class="flex gap-2">
+            <span class="tech-tag">Data Analysis</span>
+            <span class="tech-tag">Writing</span>
+          </div>
+          <a href="https://github.com/mxtxndx" target="_blank" class="text-zinc-400 hover:text-white transition-colors"><i class="fa-brands fa-github text-lg"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section class="section max-w-screen-2xl mx-auto px-8 py-16 bg-[#1a1817] border-y border-zinc-800">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-12">
+        <span class="text-xs uppercase tracking-[3px] text-zinc-500 font-medium">Experience</span>
+        <h2 class="section-header mt-2">Where I’ve worked</h2>
+      </div>
+
+      <div class="space-y-1 relative">
+        <!-- Timeline line -->
+        <div class="absolute left-[29px] top-3 bottom-3 w-[1px] bg-zinc-800"></div>
+
+        <div class="timeline-item group flex gap-x-7 relative">
+          <div class="w-14 flex-shrink-0">
+            <div class="timeline-dot w-7 h-7 rounded-full bg-zinc-800 border-4 border-[#0a0a0a] mt-1.5"></div>
+          </div>
+          <div class="flex-1 pb-2">
+            <div class="flex items-baseline gap-x-3 flex-wrap">
+              <span class="font-semibold text-lg">IT Intern</span>
+              <span class="text-xs px-3 py-px rounded-full bg-white/5 text-zinc-400">MFI Document Solutions</span>
+            </div>
+            <div class="text-zinc-400 mt-0.5">IT Department</div>
+            
+            <div class="mt-4 text-sm text-zinc-400">
+              Supported infrastructure deployment, dataset organization, workflow optimization, and web-based administrative systems.
+            </div>
+            
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="text-xs px-3 py-1 rounded-2xl bg-[#1f1c1b] border border-zinc-800">Data cleaning &amp; migration</span>
+              <span class="text-xs px-3 py-1 rounded-2xl bg-[#1f1c1b] border border-zinc-800">Technical systems support</span>
+              <span class="text-xs px-3 py-1 rounded-2xl bg-[#1f1c1b] border border-zinc-800">Workflow optimization</span>
+              <span class="text-xs px-3 py-1 rounded-2xl bg-[#1f1c1b] border border-zinc-800">Infrastructure organization</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Writing & Analytics -->
+  <section id="writing" class="section max-w-screen-2xl mx-auto px-8 py-20">
+    <div class="max-w-3xl">
+      <span class="text-xs uppercase tracking-[3px] text-zinc-500 font-medium">Writing &amp; analytics</span>
+      <h2 class="section-header mt-2">Football analysis &amp; scouting content</h2>
+      <p class="mt-4 text-zinc-400 text-lg">I regularly publish tactical football analysis and scouting content covering player performance evaluation, tactical systems, recruitment profiling, and data-driven insights.</p>
+    </div>
+
+    <div class="mt-10 grid md:grid-cols-2 gap-6">
+      <div class="border border-zinc-800 rounded-3xl p-8 bg-zinc-900/50">
+        <div class="flex items-center gap-x-3">
+          <i class="fa-brands fa-medium text-3xl text-zinc-400"></i>
+          <div>
+            <div class="font-semibold">Medium</div>
+            <div class="text-sm text-zinc-400">Long-form tactical breakdowns &amp; analysis</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="border border-zinc-800 rounded-3xl p-8 bg-zinc-900/50">
+        <div class="flex items-center gap-x-3">
+          <i class="fa-solid fa-newspaper text-3xl text-zinc-400"></i>
+          <div>
+            <div class="font-semibold">Substack</div>
+            <div class="text-sm text-zinc-400">Recruitment reports &amp; weekly insights</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-6 text-sm text-zinc-500">
+      Metrics I regularly work with: <span class="text-zinc-400">xG • xA • PAdj • Possession chains • Tactical role profiling</span>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section max-w-screen-2xl mx-auto px-8 pt-12 pb-24 border-t border-zinc-900">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center">
+        <span class="text-xs uppercase tracking-[3px] text-zinc-500 font-medium">Next steps</span>
+        <h2 class="section-header mt-2">Let’s build something<br>great together.</h2>
+      </div>
+
+      <div class="mt-10 bg-[#1f1c1b] border border-zinc-800 rounded-3xl p-9 md:p-12">
+        <div class="mb-8">
+          <div class="text-sm text-zinc-400 mb-3">I’m interested in opportunities involving:</div>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-4 py-1 text-sm rounded-2xl border border-zinc-700 bg-zinc-950">Full-stack development</span>
+            <span class="px-4 py-1 text-sm rounded-2xl border border-zinc-700 bg-zinc-950">Mobile app development</span>
+            <span class="px-4 py-1 text-sm rounded-2xl border border-zinc-700 bg-zinc-950">AI-assisted systems</span>
+            <span class="px-4 py-1 text-sm rounded-2xl border border-zinc-700 bg-zinc-950">Sports technology</span>
+            <span class="px-4 py-1 text-sm rounded-2xl border border-zinc-700 bg-zinc-950">Data-driven platforms</span>
+            <span class="px-4 py-1 text-sm rounded-2xl border border-zinc-700 bg-zinc-950">Technical product design</span>
+          </div>
+        </div>
+
+        <form id="contact-form" onsubmit="handleSubmit(event)">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="text-xs text-zinc-400 tracking-wider">YOUR NAME</label>
+              <input type="text" id="name" required
+                     class="mt-2 w-full bg-zinc-950 border border-zinc-800 focus:border-[#c17d5a] rounded-2xl px-5 py-3.5 outline-none transition placeholder:text-zinc-700">
+            </div>
+            <div>
+              <label class="text-xs text-zinc-400 tracking-wider">EMAIL ADDRESS</label>
+              <input type="email" id="email" required
+                     class="mt-2 w-full bg-zinc-950 border border-zinc-800 focus:border-[#c17d5a] rounded-2xl px-5 py-3.5 outline-none transition placeholder:text-zinc-700">
+            </div>
+          </div>
+          
+          <div class="mt-6">
+            <label class="text-xs text-zinc-400 tracking-wider">WHAT ARE YOU WORKING ON?</label>
+            <textarea id="message" rows="4" required
+                      class="mt-2 w-full resize-y bg-zinc-950 border border-zinc-800 focus:border-[#c17d5a] rounded-3xl px-5 py-4 outline-none transition placeholder:text-zinc-700"
+                      placeholder="Tell me about your project, collaboration idea, or opportunity..."></textarea>
+          </div>
+
+          <div class="mt-7 flex items-center justify-between">
+            <button type="submit"
+                    class="inline-flex items-center justify-center px-9 h-14 bg-white hover:bg-zinc-100 active:scale-[0.985] transition-all rounded-3xl font-semibold text-black">
+              Send message
+            </button>
+            
+            <div class="flex gap-x-5 text-xl text-zinc-400">
+              <a href="https://medium.com" target="_blank" class="hover:text-white transition-colors"><i class="fa-brands fa-medium"></i></a>
+              <a href="https://github.com/mxtxndx" target="_blank" class="hover:text-white transition-colors"><i class="fa-brands fa-github"></i></a>
+              <a href="https://www.linkedin.com/in/matanda-j-98a2a7133/" target="_blank" class="hover:text-white transition-colors"><i class="fa-brands fa-linkedin"></i></a>
+            </div>
+          </div>
+        </form>
+
+        <!-- Success state -->
+        <div id="success-message" class="hidden mt-4 text-center py-4 bg-emerald-950/50 border border-emerald-900 rounded-2xl">
+          <p class="text-emerald-400 font-medium">Thank you. I’ll get back to you within a few days.</p>
+        </div>
+      </div>
+
+      <div class="text-center mt-9 text-sm text-zinc-500">
+        Prefer email? Reach me directly at <a href="mailto:justus.matanda.15948@studmc.kiu.ac.ug" class="underline hover:text-white">justus.matanda.15948@studmc.kiu.ac.ug</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-t border-zinc-900 py-8">
+    <div class="max-w-screen-2xl mx-auto px-8 flex flex-col md:flex-row items-center justify-between gap-y-3 text-xs text-zinc-500">
+      <div>© 2026 Matanda Justus. All rights reserved.</div>
+      <div class="flex gap-x-5">
+        <a href="#" class="hover:text-zinc-400">Privacy</a>
+        <a href="#" class="hover:text-zinc-400">Colophon</a>
+      </div>
+      <div class="hidden md:block">Kampala, Uganda</div>
+    </div>
+  </footer>
+
+  <script>
+    // Tailwind configuration
+    function initializeTailwind() {
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              'heading': ['Space Grotesk', 'Inter', 'system-ui', 'sans-serif']
+            }
+          }
+        }
+      };
+    }
+
+    // Navbar scroll effect + active links
+    function initNavbar() {
+      const nav = document.getElementById('nav');
+      
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 30) {
+          nav.classList.add('nav-scrolled');
+        } else {
+          nav.classList.remove('nav-scrolled');
+        }
+      });
+
+      const navLinks = document.querySelectorAll('.nav-link');
+      const sections = ['about', 'work', 'tech', 'writing'];
+      
+      window.addEventListener('scroll', () => {
+        let current = '';
+        
+        sections.forEach(sectionId => {
+          const sectionEl = document.getElementById(sectionId);
+          if (!sectionEl) return;
+          
+          const sectionTop = sectionEl.offsetTop;
+          if (scrollY >= sectionTop - 180) {
+            current = sectionId;
+          }
+        });
+        
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+          }
+        });
+      });
+    }
+
+    // Mobile menu
+    function initMobileMenu() {
+      const btn = document.getElementById('mobile-menu-btn');
+      const menu = document.getElementById('mobile-menu');
+      
+      btn.addEventListener('click', () => {
+        const isOpen = !menu.classList.contains('hidden');
+        
+        if (isOpen) {
+          menu.classList.add('hidden');
+          btn.innerHTML = '<i class="fa-solid fa-bars text-xl"></i>';
+        } else {
+          menu.classList.remove('hidden');
+          btn.innerHTML = '<i class="fa-solid fa-times text-xl"></i>';
+        }
+      });
+
+      document.querySelectorAll('.mobile-link').forEach(link => {
+        link.addEventListener('click', () => {
+          menu.classList.add('hidden');
+          btn.innerHTML = '<i class="fa-solid fa-bars text-xl"></i>';
+        });
+      });
+    }
+
+    function closeMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const btn = document.getElementById('mobile-menu-btn');
+      menu.classList.add('hidden');
+      btn.innerHTML = '<i class="fa-solid fa-bars text-xl"></i>';
+    }
+
+    // Scroll reveal animations
+    function initScrollReveals() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      });
+
+      document.querySelectorAll('.reveal').forEach(el => {
+        observer.observe(el);
+      });
+    }
+
+    // Contact form
+    function handleSubmit(e) {
+      e.preventDefault();
+      
+      const form = document.getElementById('contact-form');
+      const success = document.getElementById('success-message');
+      
+      form.style.transition = 'all 0.2s ease';
+      form.style.opacity = '0.15';
+      form.style.pointerEvents = 'none';
+
+      setTimeout(() => {
+        form.style.display = 'none';
+        success.classList.remove('hidden');
+        success.classList.add('flex', 'flex-col', 'items-center', 'justify-center');
+        
+        setTimeout(() => {
+          form.style.display = 'block';
+          form.style.opacity = '1';
+          form.style.pointerEvents = 'auto';
+          form.reset();
+          success.classList.add('hidden');
+          success.classList.remove('flex', 'flex-col', 'items-center', 'justify-center');
+        }, 4800);
+      }, 900);
+    }
+
+    // Keyboard shortcuts
+    function initKeyboardShortcuts() {
+      document.addEventListener('keydown', (e) => {
+        if (e.key === '/' && document.activeElement.tagName === 'BODY') {
+          e.preventDefault();
+          const contact = document.getElementById('contact');
+          contact.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          
+          setTimeout(() => {
+            const firstInput = document.getElementById('name');
+            if (firstInput) firstInput.focus();
+          }, 750);
+        }
+        
+        if (e.key === 'Escape') {
+          const menu = document.getElementById('mobile-menu');
+          if (!menu.classList.contains('hidden')) {
+            menu.classList.add('hidden');
+            document.getElementById('mobile-menu-btn').innerHTML = '<i class="fa-solid fa-bars text-xl"></i>';
+          }
+        }
+      });
+    }
+
+    // Boot everything
+    function initializePortfolio() {
+      initializeTailwind();
+      initNavbar();
+      initMobileMenu();
+      initScrollReveals();
+      initKeyboardShortcuts();
+
+      // Make skill pills keyboard accessible
+      document.querySelectorAll('.skill-pill').forEach(pill => {
+        pill.setAttribute('tabindex', '0');
+        pill.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            pill.classList.add('!bg-[#c17d5a]', '!border-[#a67c6a]', '!text-white');
+            setTimeout(() => pill.classList.remove('!bg-[#c17d5a]', '!border-[#a67c6a]', '!text-white'), 700);
+          }
+        });
+      });
+
+      // Logo easter egg
+      let logoClicks = 0;
+      const logo = document.querySelector('nav .rounded-xl');
+      if (logo) {
+        logo.addEventListener('click', () => {
+          logoClicks++;
+          if (logoClicks === 5) {
+            logo.classList.add('!rotate-180', 'transition-transform', 'duration-700');
+            setTimeout(() => {
+              if (logo) logo.classList.remove('!rotate-180');
+              logoClicks = 0;
+            }, 900);
+          }
+        });
+      }
+
+      console.log('%c[Portfolio] Matanda Justus portfolio ready — clean, fast, and professional.', 'color:#52525b');
+    }
+
+    window.onload = initializePortfolio;
+  </script>
+</body>
+</html>
