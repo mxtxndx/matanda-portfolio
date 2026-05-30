@@ -9,12 +9,13 @@ A clean, elegant, and professional portfolio website for Matanda Justus.
 
 ## What's Included
 
-- Beautiful dark modern design with violet/indigo accents
+- Beautiful dark modern design with warm terracotta accents
 - Smooth scroll-reveal animations and micro-interactions
 - Fully responsive (excellent on mobile)
-- All real content: bio, projects (Hospital, School, Football Analytics), tech stack, internship, and writing platforms
+- All real content: bio, projects (Hospital Management, Primary School Management, Football Scouting & Analysis), tech stack, internship, and writing platforms
 - Working contact form (demo) + keyboard shortcut (`/` to jump to contact)
 - Professional portrait included
+- Dedicated, print-optimized resume page
 
 ## How to View
 
@@ -27,8 +28,8 @@ A clean, elegant, and professional portfolio website for Matanda Justus.
 
 ## Customization
 
-- Replace `profile.jpg` with your own professional photo (currently using your personal one)
-- Update links (GitHub, Medium, LinkedIn, email)
+- Replace `profile.jpg` with your own professional photo
+- Update links (GitHub, LinkedIn, email) — writing platform links are currently informational
 - Edit project details or add new ones in the HTML
 - Change accent colors via the Tailwind classes and gradients
 - A dedicated `resume.html` page (clean, professional, print-to-PDF ready) — linked from navbar and hero
@@ -39,10 +40,20 @@ A clean, elegant, and professional portfolio website for Matanda Justus.
 - Vanilla JavaScript
 - Font Awesome 6
 
-Built with clarity and intention.
+## Deployment
+
+This is a static site. Ready for Vercel (already configured via `vercel.json`).
+
+## Recent Maintenance
+
+- Removed duplicate nested folder
+- Fixed logo easter egg interaction
+- Removed non-functional external links
+- Consistent GitHub links across all project cards
+- Cleaner footer
 
 ---
 
-**Live version tip:** For production, replace the placeholder email (if needed) and add real Medium/Substack URLs.
+**Resume tip:** Open `resume.html` → click “Download as PDF”. It is optimized for A4 printing and looks excellent when saved as PDF.
 
-**Resume:** Open `resume.html` → click “Download as PDF”. It is optimized for A4 printing and looks excellent when saved as PDF.
+**Future work:** Add real Medium/Substack profile links when available.

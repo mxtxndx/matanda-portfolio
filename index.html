@@ -4,18 +4,44 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Matanda Justus • Full-Stack &amp; Mobile Developer</title>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="favicon.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
 
     :root {
-      --accent: #c17d5a; /* Warm terracotta accent - calmer, more artistic */
+      /* Light (Beige) Theme */
+      --accent: #c17d5a;
+      --bg: #f8f4ed;
+      --bg-secondary: #ede4d3;
+      --bg-card: #e8dfce;
+      --text-primary: #2c2522;
+      --text-secondary: #5c5148;
+      --text-muted: #8a7b6d;
+      --border: #c9b8a3;
+      --nav-bg: rgba(248, 244, 237, 0.95);
+    }
+
+    .dark {
+      /* Dark Theme */
+      --accent: #c17d5a;
+      --bg: #121110;
+      --bg-secondary: #1a1817;
+      --bg-card: #1f1c1b;
+      --text-primary: #e5e0d8;
+      --text-secondary: #a8a29c;
+      --text-muted: #a8a29c;
+      --border: #3a3633;
+      --nav-bg: rgba(18, 17, 16, 0.95);
     }
 
     body {
       font-family: 'Inter', system_ui, sans-serif;
-      background-color: #121110; /* Warmer dark base */
+      background-color: var(--bg);
+      color: var(--text-primary);
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .heading-font {
@@ -114,9 +140,9 @@
     }
 
     .nav-scrolled {
-      background: rgba(10, 10, 10, 0.85);
+      background: var(--nav-bg);
       backdrop-filter: blur(20px);
-      border-bottom-color: #27272a;
+      border-bottom-color: var(--border);
     }
 
     .stat-number {
@@ -171,29 +197,62 @@
     .terminal-line {
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     }
+
+    /* Dark mode specific overrides */
+    .dark .nav-link {
+      color: var(--text-secondary);
+    }
+    .dark .nav-link:hover {
+      color: var(--text-primary);
+    }
+    .dark .mobile-link {
+      color: var(--text-secondary);
+    }
+    .dark .mobile-link:hover {
+      color: var(--text-primary);
+    }
+
+    /* Ensure good contrast on dark cards and sections */
+    .dark .text-\[\#5c5148\] {
+      color: var(--text-secondary) !important;
+    }
+    .dark .hover\:text-white:hover {
+      color: var(--text-primary) !important;
+    }
+
+    .dark .text-\[\#5c5148\] {
+      color: var(--text-secondary) !important;
+    }
   </style>
 </head>
-<body class="bg-[#0a0a0a] text-zinc-200 smooth-scroll overflow-x-hidden">
+<body class="smooth-scroll overflow-x-hidden">
   <!-- Navbar -->
-  <nav id="nav" class="fixed top-0 left-0 right-0 z-50 border-b border-zinc-900 transition-all duration-300">
+  <nav id="nav" class="fixed top-0 left-0 right-0 z-50 border-b border-[var(--border)] bg-[var(--nav-bg)] backdrop-blur transition-all duration-300">
     <div class="max-w-screen-2xl mx-auto">
       <div class="px-8 h-20 flex items-center justify-between">
         <div class="flex items-center">
-          <img src="./logo-nav.png" alt="Matanda Justus" class="h-[42px] w-auto">
+          <img src="./mj-logo-dark.png" alt="Matanda Justus" class="h-[42px] w-auto">
         </div>
 
         <!-- Desktop Navigation -->
         <div class="hidden md:flex items-center gap-x-10 text-sm">
-          <a href="#about" class="nav-link text-zinc-400 hover:text-zinc-100 px-1 py-2 text-[0.925rem]">About</a>
-          <a href="#work" class="nav-link text-zinc-400 hover:text-zinc-100 px-1 py-2 text-[0.925rem]">Work</a>
-          <a href="#tech" class="nav-link text-zinc-400 hover:text-zinc-100 px-1 py-2 text-[0.925rem]">Tech</a>
-          <a href="#writing" class="nav-link text-zinc-400 hover:text-zinc-100 px-1 py-2 text-[0.925rem]">Writing</a>
-          <a href="resume.html" class="nav-link text-zinc-400 hover:text-zinc-100 px-1 py-2 text-[0.925rem]">Resume</a>
+          <a href="#about" class="nav-link text-[var(--text-secondary)] hover:text-[var(--text-primary)] px-1 py-2 text-[0.925rem]">About</a>
+          <a href="#work" class="nav-link text-[var(--text-secondary)] hover:text-[var(--text-primary)] px-1 py-2 text-[0.925rem]">Work</a>
+          <a href="#tech" class="nav-link text-[var(--text-secondary)] hover:text-[var(--text-primary)] px-1 py-2 text-[0.925rem]">Tech</a>
+          <a href="#writing" class="nav-link text-[var(--text-secondary)] hover:text-[var(--text-primary)] px-1 py-2 text-[0.925rem]">Writing</a>
+          <a href="resume.html" class="nav-link text-[var(--text-secondary)] hover:text-[var(--text-primary)] px-1 py-2 text-[0.925rem]">Resume</a>
         </div>
 
         <div class="hidden md:flex items-center gap-x-3">
+          <!-- Theme Toggle -->
+          <button id="theme-toggle"
+                  class="w-10 h-10 flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] rounded-2xl transition-all"
+                  aria-label="Toggle dark mode">
+            <i class="fa-solid fa-moon text-lg" id="theme-icon"></i>
+          </button>
+
           <a href="https://github.com/mxtxndx" target="_blank"
-             class="flex items-center gap-x-2 px-4 py-2 text-sm rounded-2xl border border-zinc-800 hover:bg-zinc-900 transition-colors">
+             class="flex items-center gap-x-2 px-4 py-2 text-sm rounded-2xl border border-[var(--border)] hover:bg-[var(--bg-secondary)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
             <i class="fa-brands fa-github"></i>
             <span>GitHub</span>
           </a>
@@ -205,7 +264,7 @@
 
         <!-- Mobile Menu Button -->
         <button id="mobile-menu-btn"
-                class="md:hidden w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white transition-colors"
+                class="md:hidden w-10 h-10 flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
                 aria-label="Toggle menu">
           <i class="fa-solid fa-bars text-xl"></i>
         </button>
@@ -213,15 +272,15 @@
     </div>
 
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden border-t border-zinc-900 bg-[#0a0a0a]">
+    <div id="mobile-menu" class="hidden md:hidden border-t border-[var(--border)] bg-[var(--bg)]">
       <div class="px-6 py-6 flex flex-col gap-y-4 text-sm">
-        <a href="#about" class="mobile-link py-2 text-zinc-400 hover:text-white">About</a>
-        <a href="#work" class="mobile-link py-2 text-zinc-400 hover:text-white">Work</a>
-        <a href="#tech" class="mobile-link py-2 text-zinc-400 hover:text-white">Tech</a>
-        <a href="#writing" class="mobile-link py-2 text-zinc-400 hover:text-white">Writing</a>
-        <a href="resume.html" class="mobile-link py-2 text-zinc-400 hover:text-white">Resume</a>
-        <div class="pt-4 border-t border-zinc-800 flex flex-col gap-y-3">
-          <a href="https://github.com/mxtxndx" target="_blank" class="flex items-center gap-x-2 py-2 text-zinc-400">
+        <a href="#about" class="mobile-link py-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)]">About</a>
+        <a href="#work" class="mobile-link py-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)]">Work</a>
+        <a href="#tech" class="mobile-link py-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)]">Tech</a>
+        <a href="#writing" class="mobile-link py-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)]">Writing</a>
+        <a href="resume.html" class="mobile-link py-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)]">Resume</a>
+        <div class="pt-4 border-t border-[#c9b8a3] flex flex-col gap-y-3">
+          <a href="https://github.com/mxtxndx" target="_blank" class="flex items-center gap-x-2 py-2 text-[var(--text-secondary)]">
             <i class="fa-brands fa-github w-5"></i> GitHub
           </a>
           <button onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' }); closeMobileMenu()"
@@ -239,27 +298,27 @@
       <div class="grid md:grid-cols-12 gap-x-8 items-center">
         <!-- Text Content -->
         <div class="md:col-span-7 lg:col-span-7">
-          <div class="inline-flex items-center gap-x-2 px-4 h-8 rounded-2xl border border-zinc-800 bg-zinc-900/60 mb-8">
+          <div class="inline-flex items-center gap-x-2 px-4 h-8 rounded-2xl border border-[#c9b8a3] bg-[#ede4d3]/70 mb-8">
             <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
-            <span class="text-sm text-zinc-400">Open to opportunities &amp; collaborations</span>
+            <span class="text-sm text-[var(--text-secondary)]">Open to opportunities &amp; collaborations</span>
           </div>
 
           <h1 class="text-6xl md:text-7xl lg:text-7xl font-semibold tracking-tighter heading-font leading-[1.05]">
             Matanda Justus
           </h1>
           
-          <p class="mt-3 text-2xl md:text-3xl text-zinc-400 tracking-tight">
+          <p class="mt-3 text-2xl md:text-3xl text-[var(--text-secondary)] tracking-tight">
             Full-Stack &amp; Mobile Developer
           </p>
 
           <div class="flex flex-wrap gap-2 mt-5">
-            <div class="px-4 py-1 text-sm rounded-2xl border border-zinc-800 bg-zinc-900/60 text-zinc-300">React</div>
-            <div class="px-4 py-1 text-sm rounded-2xl border border-zinc-800 bg-zinc-900/60 text-zinc-300">Flutter</div>
-            <div class="px-4 py-1 text-sm rounded-2xl border border-zinc-800 bg-zinc-900/60 text-zinc-300">Supabase</div>
-            <div class="px-4 py-1 text-sm rounded-2xl border border-zinc-800 bg-zinc-900/60 text-zinc-300">Football Analytics</div>
+            <div class="px-4 py-1 text-sm rounded-2xl border border-[#c9b8a3] bg-[#ede4d3]/70 text-[#3f3530]">React</div>
+            <div class="px-4 py-1 text-sm rounded-2xl border border-[#c9b8a3] bg-[#ede4d3]/70 text-[#3f3530]">Flutter</div>
+            <div class="px-4 py-1 text-sm rounded-2xl border border-[#c9b8a3] bg-[#ede4d3]/70 text-[#3f3530]">Supabase</div>
+            <div class="px-4 py-1 text-sm rounded-2xl border border-[#c9b8a3] bg-[#ede4d3]/70 text-[#3f3530]">Football Analytics</div>
           </div>
 
-          <p class="mt-6 max-w-lg text-[15.5px] text-zinc-400 leading-relaxed">
+          <p class="mt-6 max-w-lg text-[15.5px] text-[var(--text-secondary)] leading-relaxed">
             Computer Science student at Kampala International University. I build scalable digital systems that combine clean engineering, intuitive design, and real-world functionality.
           </p>
 
@@ -271,12 +330,12 @@
             </button>
             
             <a href="#contact" 
-               class="flex items-center gap-x-3 px-7 h-14 border border-zinc-800 hover:bg-zinc-900 rounded-3xl transition-all text-sm font-medium">
+               class="flex items-center gap-x-3 px-7 h-14 border border-[#c9b8a3] hover:bg-[#ede4d3] rounded-3xl transition-all text-sm font-medium">
               <span>Get in touch</span>
             </a>
             
             <a href="resume.html" target="_blank"
-               class="flex items-center gap-x-2.5 pl-5 pr-6 h-14 text-sm font-medium text-zinc-400 hover:text-zinc-200 transition-colors">
+               class="flex items-center gap-x-2.5 pl-5 pr-6 h-14 text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
               <i class="fa-solid fa-download"></i>
               <span>View Resume</span>
             </a>
@@ -286,30 +345,30 @@
         <!-- Hero Portrait -->
         <div class="md:col-span-5 lg:col-span-5 mt-12 md:mt-0 relative">
           <div class="relative mx-auto md:ml-auto w-full max-w-[380px]">
-            <div class="aspect-square rounded-[3.25rem] overflow-hidden border border-zinc-800 shadow-2xl shadow-black/40 relative">
+            <div class="aspect-square rounded-[3.25rem] overflow-hidden border border-[#c9b8a3] shadow-2xl shadow-black/40 relative">
               <img src="./profile.jpg" alt="Matanda Justus" 
                    class="w-full h-full object-cover grayscale-[0.08]">
               <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30"></div>
             </div>
             
             <!-- Floating accent badge -->
-            <div class="absolute -bottom-3 -left-3 bg-[#1f1c1b] border border-zinc-800 rounded-2xl px-4 py-3 shadow-xl flex items-center gap-x-3">
+            <div class="absolute -bottom-3 -left-3 bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl px-4 py-3 shadow-xl flex items-center gap-x-3">
               <div>
-                <div class="text-xs text-zinc-500">Currently studying</div>
+                <div class="text-xs text-[var(--text-secondary)]">Currently studying</div>
                 <div class="font-medium text-sm tracking-tight">Computer Science, KIU</div>
               </div>
             </div>
             
             <!-- Decorative element -->
-            <div class="hidden xl:block absolute -top-4 -right-4 w-20 h-20 border border-zinc-800 rounded-3xl"></div>
+            <div class="hidden xl:block absolute -top-4 -right-4 w-20 h-20 border border-[#c9b8a3] rounded-3xl"></div>
             
             <!-- Elegant floating terminal hint -->
-            <div class="hidden 2xl:flex absolute -bottom-2 right-6 bg-zinc-900/95 border border-zinc-800 rounded-2xl px-4 py-2.5 text-[10px] font-mono items-center gap-x-2 shadow-xl">
+            <div class="hidden 2xl:flex absolute -bottom-2 right-6 bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl px-4 py-2.5 text-[10px] font-mono items-center gap-x-2 shadow-xl">
               <div class="flex items-center gap-x-1.5">
                 <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
                 <span class="text-emerald-400">building</span>
               </div>
-              <span class="text-zinc-500">/uganda-systems</span>
+              <span class="text-[var(--text-muted)]">/uganda-systems</span>
             </div>
           </div>
         </div>
@@ -318,17 +377,17 @@
   </header>
 
   <!-- About -->
-  <section id="about" class="section max-w-screen-2xl mx-auto px-8 pt-10 pb-24 border-t border-zinc-900">
+  <section id="about" class="section max-w-screen-2xl mx-auto px-8 pt-10 pb-24 border-t border-[#c9b8a3]">
     <div class="grid md:grid-cols-12 gap-x-12 items-start">
       <div class="md:col-span-4">
         <div class="sticky top-24">
-          <span class="text-xs uppercase tracking-[3px] text-zinc-500 font-medium">About me</span>
+          <span class="text-xs uppercase tracking-[3px] text-[var(--text-secondary)] font-medium">About me</span>
           <h2 class="section-header mt-3 leading-none">I build systems<br>that actually work.</h2>
         </div>
       </div>
       
       <div class="md:col-span-8 mt-8 md:mt-0 max-w-2xl">
-        <div class="text-[15.5px] text-zinc-300 leading-relaxed space-y-6">
+        <div class="text-[15.5px] text-[#3f3530] leading-relaxed space-y-6">
           <p>I am a Computer Science student at Kampala International University passionate about building scalable digital systems that combine clean engineering, intuitive design, and practical real-world functionality.</p>
           
           <p>My work focuses on full-stack web and mobile development using modern technologies such as React, Flutter, Supabase, PostgreSQL, and Tailwind CSS. I enjoy architecting systems from the ground up — from database structure and backend logic to frontend user experience and workflow optimization.</p>
@@ -340,43 +399,43 @@
   </section>
 
   <!-- What I Do -->
-  <section class="section max-w-screen-2xl mx-auto px-8 py-20 bg-[#1a1817] border-y border-zinc-800">
+  <section class="section max-w-screen-2xl mx-auto px-8 py-20 bg-[#ede4d3] border-y border-[#c9b8a3]">
     <div class="max-w-5xl">
-      <span class="text-xs uppercase tracking-[3px] text-zinc-500 font-medium">What I do</span>
+      <span class="text-xs uppercase tracking-[3px] text-[var(--text-secondary)] font-medium">What I do</span>
       <h2 class="section-header mt-2">How I create value</h2>
     </div>
 
     <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="bg-[#1f1c1b] border border-zinc-800 rounded-3xl p-7 reveal">
+      <div class="bg-[#e8dfce] border border-[#c9b8a3] rounded-3xl p-7 reveal">
         <div class="w-10 h-10 flex items-center justify-center rounded-2xl bg-[#c17d5a]/10 text-[#c17d5a] mb-5">
           <i class="fa-solid fa-globe text-xl"></i>
         </div>
         <h3 class="font-semibold text-lg">Full-Stack Development</h3>
-        <p class="mt-3 text-[14.5px] text-zinc-400">Building scalable web applications with modern frontend frameworks, backend systems, and secure database architecture.</p>
+        <p class="mt-3 text-[14.5px] text-[var(--text-secondary)]">Building scalable web applications with modern frontend frameworks, backend systems, and secure database architecture.</p>
       </div>
 
-      <div class="bg-[#1f1c1b] border border-zinc-800 rounded-3xl p-7 reveal stagger-1">
+      <div class="bg-[#e8dfce] border border-[#c9b8a3] rounded-3xl p-7 reveal stagger-1">
         <div class="w-10 h-10 flex items-center justify-center rounded-2xl bg-[#a67c6a]/10 text-[#a67c6a] mb-5">
           <i class="fa-solid fa-mobile-screen text-xl"></i>
         </div>
         <h3 class="font-semibold text-lg">Mobile App Development</h3>
-        <p class="mt-3 text-[14.5px] text-zinc-400">Developing responsive cross-platform mobile applications using Flutter and Dart with beautiful, performant UIs.</p>
+        <p class="mt-3 text-[14.5px] text-[var(--text-secondary)]">Developing responsive cross-platform mobile applications using Flutter and Dart with beautiful, performant UIs.</p>
       </div>
 
-      <div class="bg-[#1f1c1b] border border-zinc-800 rounded-3xl p-7 reveal stagger-2">
+      <div class="bg-[#e8dfce] border border-[#c9b8a3] rounded-3xl p-7 reveal stagger-2">
         <div class="w-10 h-10 flex items-center justify-center rounded-2xl bg-teal-500/10 text-teal-400 mb-5">
           <i class="fa-solid fa-database text-xl"></i>
         </div>
         <h3 class="font-semibold text-lg">Database &amp; System Design</h3>
-        <p class="mt-3 text-[14.5px] text-zinc-400">Designing relational database systems, optimized workflows, and scalable architectures tailored for practical environments.</p>
+        <p class="mt-3 text-[14.5px] text-[var(--text-secondary)]">Designing relational database systems, optimized workflows, and scalable architectures tailored for practical environments.</p>
       </div>
 
-      <div class="bg-[#1f1c1b] border border-zinc-800 rounded-3xl p-7 reveal stagger-3">
+      <div class="bg-[#e8dfce] border border-[#c9b8a3] rounded-3xl p-7 reveal stagger-3">
         <div class="w-10 h-10 flex items-center justify-center rounded-2xl bg-amber-500/10 text-amber-400 mb-5">
           <i class="fa-solid fa-chart-line text-xl"></i>
         </div>
         <h3 class="font-semibold text-lg">Football Analytics &amp; Writing</h3>
-        <p class="mt-3 text-[14.5px] text-zinc-400">Creating tactical reports, scouting analysis, and data-driven football content using advanced metrics and structured analysis.</p>
+        <p class="mt-3 text-[14.5px] text-[var(--text-secondary)]">Creating tactical reports, scouting analysis, and data-driven football content using advanced metrics and structured analysis.</p>
       </div>
     </div>
   </section>
@@ -384,100 +443,100 @@
   <!-- Tech Stack -->
   <section id="tech" class="section max-w-screen-2xl mx-auto px-8 py-20">
     <div class="max-w-5xl">
-      <span class="text-xs uppercase tracking-[3px] text-zinc-500 font-medium">Tech stack</span>
+      <span class="text-xs uppercase tracking-[3px] text-[var(--text-secondary)] font-medium">Tech stack</span>
       <h2 class="section-header mt-2">Tools I use to build</h2>
     </div>
 
     <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-3">
       <!-- Frontend -->
-      <div class="bg-[#1f1c1b] border border-zinc-800 rounded-3xl p-7">
-        <div class="flex items-center gap-x-2 text-sm font-medium text-zinc-400 mb-5">
+      <div class="bg-[#e8dfce] border border-[#c9b8a3] rounded-3xl p-7">
+        <div class="flex items-center gap-x-2 text-sm font-medium text-[var(--text-secondary)] mb-5">
           <i class="fa-solid fa-code w-4"></i>
           <span>Frontend</span>
         </div>
         <div class="flex flex-wrap gap-2">
-          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">React</div>
-          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">Vite</div>
-          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">Tailwind CSS</div>
-          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">JavaScript (ES6+)</div>
-          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">HTML5</div>
-          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">CSS3</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-[#f8f4ed] border border-[#c9b8a3]">React</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-[#f8f4ed] border border-[#c9b8a3]">Vite</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-[#f8f4ed] border border-[#c9b8a3]">Tailwind CSS</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-[#f8f4ed] border border-[#c9b8a3]">JavaScript (ES6+)</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-[#f8f4ed] border border-[#c9b8a3]">HTML5</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-[#f8f4ed] border border-[#c9b8a3]">CSS3</div>
         </div>
       </div>
 
       <!-- Mobile -->
-      <div class="bg-[#1f1c1b] border border-zinc-800 rounded-3xl p-7">
-        <div class="flex items-center gap-x-2 text-sm font-medium text-zinc-400 mb-5">
+      <div class="bg-[#e8dfce] border border-[#c9b8a3] rounded-3xl p-7">
+        <div class="flex items-center gap-x-2 text-sm font-medium text-[var(--text-secondary)] mb-5">
           <i class="fa-solid fa-mobile-alt w-4"></i>
           <span>Mobile</span>
         </div>
         <div class="flex flex-wrap gap-2">
-          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">Flutter</div>
-          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">Dart</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-[#f8f4ed] border border-[#c9b8a3]">Flutter</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-[#f8f4ed] border border-[#c9b8a3]">Dart</div>
         </div>
       </div>
 
       <!-- Backend & Database -->
-      <div class="bg-[#1f1c1b] border border-zinc-800 rounded-3xl p-7">
-        <div class="flex items-center gap-x-2 text-sm font-medium text-zinc-400 mb-5">
+      <div class="bg-[#e8dfce] border border-[#c9b8a3] rounded-3xl p-7">
+        <div class="flex items-center gap-x-2 text-sm font-medium text-[var(--text-secondary)] mb-5">
           <i class="fa-solid fa-server w-4"></i>
           <span>Backend &amp; Database</span>
         </div>
         <div class="flex flex-wrap gap-2">
-          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">Supabase</div>
-          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">PostgreSQL</div>
-          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">REST APIs</div>
-          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">Relational DB Design</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-[#f8f4ed] border border-[#c9b8a3]">Supabase</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-[#f8f4ed] border border-[#c9b8a3]">PostgreSQL</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-[#f8f4ed] border border-[#c9b8a3]">REST APIs</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-[#f8f4ed] border border-[#c9b8a3]">Relational DB Design</div>
         </div>
       </div>
 
       <!-- Tools & Workflow -->
-      <div class="bg-[#1f1c1b] border border-zinc-800 rounded-3xl p-7">
-        <div class="flex items-center gap-x-2 text-sm font-medium text-zinc-400 mb-5">
+      <div class="bg-[#e8dfce] border border-[#c9b8a3] rounded-3xl p-7">
+        <div class="flex items-center gap-x-2 text-sm font-medium text-[var(--text-secondary)] mb-5">
           <i class="fa-solid fa-tools w-4"></i>
           <span>Tools &amp; Workflow</span>
         </div>
         <div class="flex flex-wrap gap-2">
-          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">Git &amp; GitHub</div>
-          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">System Architecture</div>
-          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">Agile Development</div>
-          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">Technical Documentation</div>
-          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-zinc-950 border border-zinc-800">UI/UX Workflow Design</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-[#f8f4ed] border border-[#c9b8a3]">Git &amp; GitHub</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-[#f8f4ed] border border-[#c9b8a3]">System Architecture</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-[#f8f4ed] border border-[#c9b8a3]">Agile Development</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-[#f8f4ed] border border-[#c9b8a3]">Technical Documentation</div>
+          <div class="skill-pill px-4 py-1.5 text-sm rounded-2xl bg-[#f8f4ed] border border-[#c9b8a3]">UI/UX Workflow Design</div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Featured Projects -->
-  <section id="work" class="section max-w-screen-2xl mx-auto px-8 py-16 border-t border-zinc-900">
+  <section id="work" class="section max-w-screen-2xl mx-auto px-8 py-16 border-t border-[#c9b8a3]">
     <div class="flex items-end justify-between mb-10">
       <div>
-        <span class="text-xs uppercase tracking-[3px] text-zinc-500 font-medium">Featured projects</span>
+        <span class="text-xs uppercase tracking-[3px] text-[var(--text-secondary)] font-medium">Featured projects</span>
         <h2 class="section-header mt-2">Things I’ve built</h2>
       </div>
       <a href="https://github.com/mxtxndx" target="_blank" 
-         class="hidden md:flex items-center gap-x-2 text-sm text-zinc-400 hover:text-white transition-colors">
+         class="hidden md:flex items-center gap-x-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
         View more on GitHub <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
       </a>
     </div>
 
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
       <!-- Hospital Management System -->
-      <div class="project-card group bg-[#1f1c1b] border border-zinc-800 rounded-3xl overflow-hidden flex flex-col">
+      <div class="project-card group bg-[#e8dfce] border border-[#c9b8a3] rounded-3xl overflow-hidden flex flex-col">
         <div class="h-2 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
         <div class="p-7 flex-1">
           <div class="flex items-start justify-between">
             <div>
               <h3 class="font-semibold text-2xl tracking-tight">Hospital Management System</h3>
-              <p class="text-zinc-400 text-sm mt-1">Healthcare • Uganda</p>
+              <p class="text-[var(--text-secondary)] text-sm mt-1">Healthcare • Uganda</p>
             </div>
           </div>
           
-          <p class="mt-5 text-[14.5px] text-zinc-300 leading-relaxed">A comprehensive healthcare platform developed for Ugandan health centers. Built with React, Supabase, PostgreSQL, and Tailwind CSS.</p>
+          <p class="mt-5 text-[14.5px] text-[#3f3530] leading-relaxed">A comprehensive healthcare platform developed for Ugandan health centers. Built with React, Supabase, PostgreSQL, and Tailwind CSS.</p>
           
           <div class="mt-6">
-            <div class="text-xs uppercase tracking-wider text-zinc-500 mb-2">Key features</div>
-            <ul class="text-sm text-zinc-400 space-y-1">
+            <div class="text-xs uppercase tracking-wider text-[var(--text-muted)] mb-2">Key features</div>
+            <ul class="text-sm text-[var(--text-secondary)] space-y-1">
               <li class="flex gap-2"><span class="text-emerald-400 mt-1">•</span> Patient records management</li>
               <li class="flex gap-2"><span class="text-emerald-400 mt-1">•</span> Audit logging &amp; compliance</li>
               <li class="flex gap-2"><span class="text-emerald-400 mt-1">•</span> Medical inventory systems</li>
@@ -485,32 +544,32 @@
             </ul>
           </div>
         </div>
-        <div class="px-7 py-5 border-t border-zinc-800 flex items-center justify-between text-sm">
+        <div class="px-7 py-5 border-t border-[#c9b8a3] flex items-center justify-between text-sm">
           <div class="flex gap-2">
             <span class="tech-tag">React</span>
             <span class="tech-tag">Supabase</span>
             <span class="tech-tag">PostgreSQL</span>
           </div>
-          <a href="https://github.com/mxtxndx" target="_blank" class="text-zinc-400 hover:text-white transition-colors"><i class="fa-brands fa-github text-lg"></i></a>
+          <a href="https://github.com/mxtxndx" target="_blank" class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"><i class="fa-brands fa-github text-lg"></i></a>
         </div>
       </div>
 
       <!-- Primary School Management System -->
-      <div class="project-card group bg-[#1f1c1b] border border-zinc-800 rounded-3xl overflow-hidden flex flex-col">
+      <div class="project-card group bg-[#e8dfce] border border-[#c9b8a3] rounded-3xl overflow-hidden flex flex-col">
         <div class="h-2 bg-gradient-to-r from-[#c17d5a] to-[#a67c6a]"></div>
         <div class="p-7 flex-1">
           <div class="flex items-start justify-between">
             <div>
               <h3 class="font-semibold text-2xl tracking-tight">Primary School Management</h3>
-              <p class="text-zinc-400 text-sm mt-1">Education • Uganda</p>
+              <p class="text-[var(--text-secondary)] text-sm mt-1">Education • Uganda</p>
             </div>
           </div>
           
-          <p class="mt-5 text-[14.5px] text-zinc-300 leading-relaxed">A complete school management platform designed specifically around the Ugandan P1–P7 educational structure and local administrative needs.</p>
+          <p class="mt-5 text-[14.5px] text-[#3f3530] leading-relaxed">A complete school management platform designed specifically around the Ugandan P1–P7 educational structure and local administrative needs.</p>
           
           <div class="mt-6">
-            <div class="text-xs uppercase tracking-wider text-zinc-500 mb-2">Key features</div>
-            <ul class="text-sm text-zinc-400 space-y-1">
+            <div class="text-xs uppercase tracking-wider text-[var(--text-muted)] mb-2">Key features</div>
+            <ul class="text-sm text-[var(--text-secondary)] space-y-1">
               <li class="flex gap-2"><span class="text-sky-400 mt-1">•</span> Student profiling &amp; records</li>
               <li class="flex gap-2"><span class="text-sky-400 mt-1">•</span> Attendance management</li>
               <li class="flex gap-2"><span class="text-sky-400 mt-1">•</span> Academic report generation</li>
@@ -518,31 +577,31 @@
             </ul>
           </div>
         </div>
-        <div class="px-7 py-5 border-t border-zinc-800 flex items-center justify-between text-sm">
+        <div class="px-7 py-5 border-t border-[#c9b8a3] flex items-center justify-between text-sm">
           <div class="flex gap-2">
             <span class="tech-tag">React</span>
             <span class="tech-tag">Supabase</span>
             <span class="tech-tag">Tailwind</span>
           </div>
-          <a href="#" class="text-zinc-400 hover:text-white transition-colors"><i class="fa-brands fa-github text-lg"></i></a>
+          <a href="https://github.com/mxtxndx" target="_blank" class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"><i class="fa-brands fa-github text-lg"></i></a>
         </div>
       </div>
 
       <!-- Football Scouting & Tactical Analysis -->
-      <div class="project-card group bg-[#1f1c1b] border border-zinc-800 rounded-3xl overflow-hidden flex flex-col">
+      <div class="project-card group bg-[#e8dfce] border border-[#c9b8a3] rounded-3xl overflow-hidden flex flex-col">
         <div class="h-2 bg-gradient-to-r from-amber-500 to-orange-500"></div>
         <div class="p-7 flex-1">
           <div class="flex items-start justify-between">
             <div>
               <h3 class="font-semibold text-2xl tracking-tight">Football Scouting &amp; Analysis</h3>
-              <p class="text-zinc-400 text-sm mt-1">Sports Analytics</p>
+              <p class="text-[var(--text-secondary)] text-sm mt-1">Sports Analytics</p>
             </div>
           </div>
           
-          <p class="mt-5 text-[14.5px] text-zinc-300 leading-relaxed">A structured football-analysis platform and writing workflow focused on recruitment-grade scouting reports and tactical breakdowns.</p>
+          <p class="mt-5 text-[14.5px] text-[#3f3530] leading-relaxed">A structured football-analysis platform and writing workflow focused on recruitment-grade scouting reports and tactical breakdowns.</p>
           
           <div class="mt-6">
-            <div class="text-xs uppercase tracking-wider text-zinc-500 mb-2">Analysis areas</div>
+            <div class="text-xs uppercase tracking-wider text-[var(--text-muted)] mb-2">Analysis areas</div>
             <div class="flex flex-wrap gap-2">
               <span class="tech-tag">xG &amp; xA</span>
               <span class="tech-tag">PAdj</span>
@@ -552,22 +611,22 @@
             </div>
           </div>
         </div>
-        <div class="px-7 py-5 border-t border-zinc-800 flex items-center justify-between text-sm">
+        <div class="px-7 py-5 border-t border-[#c9b8a3] flex items-center justify-between text-sm">
           <div class="flex gap-2">
             <span class="tech-tag">Data Analysis</span>
             <span class="tech-tag">Writing</span>
           </div>
-          <a href="https://github.com/mxtxndx" target="_blank" class="text-zinc-400 hover:text-white transition-colors"><i class="fa-brands fa-github text-lg"></i></a>
+          <a href="https://github.com/mxtxndx" target="_blank" class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"><i class="fa-brands fa-github text-lg"></i></a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Experience -->
-  <section class="section max-w-screen-2xl mx-auto px-8 py-16 bg-[#1a1817] border-y border-zinc-800">
+  <section class="section max-w-screen-2xl mx-auto px-8 py-16 bg-[#ede4d3] border-y border-[#c9b8a3]">
     <div class="max-w-3xl mx-auto">
       <div class="text-center mb-12">
-        <span class="text-xs uppercase tracking-[3px] text-zinc-500 font-medium">Experience</span>
+        <span class="text-xs uppercase tracking-[3px] text-[var(--text-secondary)] font-medium">Experience</span>
         <h2 class="section-header mt-2">Where I’ve worked</h2>
       </div>
 
@@ -582,19 +641,19 @@
           <div class="flex-1 pb-2">
             <div class="flex items-baseline gap-x-3 flex-wrap">
               <span class="font-semibold text-lg">IT Intern</span>
-              <span class="text-xs px-3 py-px rounded-full bg-white/5 text-zinc-400">MFI Document Solutions</span>
+              <span class="text-xs px-3 py-px rounded-full bg-white/5 text-[var(--text-secondary)]">MFI Document Solutions</span>
             </div>
-            <div class="text-zinc-400 mt-0.5">IT Department</div>
+            <div class="text-[var(--text-secondary)] mt-0.5">IT Department</div>
             
-            <div class="mt-4 text-sm text-zinc-400">
+            <div class="mt-4 text-sm text-[var(--text-secondary)]">
               Supported infrastructure deployment, dataset organization, workflow optimization, and web-based administrative systems.
             </div>
             
             <div class="mt-4 flex flex-wrap gap-2">
-              <span class="text-xs px-3 py-1 rounded-2xl bg-[#1f1c1b] border border-zinc-800">Data cleaning &amp; migration</span>
-              <span class="text-xs px-3 py-1 rounded-2xl bg-[#1f1c1b] border border-zinc-800">Technical systems support</span>
-              <span class="text-xs px-3 py-1 rounded-2xl bg-[#1f1c1b] border border-zinc-800">Workflow optimization</span>
-              <span class="text-xs px-3 py-1 rounded-2xl bg-[#1f1c1b] border border-zinc-800">Infrastructure organization</span>
+              <span class="text-xs px-3 py-1 rounded-2xl bg-[#e8dfce] border border-[#c9b8a3]">Data cleaning &amp; migration</span>
+              <span class="text-xs px-3 py-1 rounded-2xl bg-[#e8dfce] border border-[#c9b8a3]">Technical systems support</span>
+              <span class="text-xs px-3 py-1 rounded-2xl bg-[#e8dfce] border border-[#c9b8a3]">Workflow optimization</span>
+              <span class="text-xs px-3 py-1 rounded-2xl bg-[#e8dfce] border border-[#c9b8a3]">Infrastructure organization</span>
             </div>
           </div>
         </div>
@@ -605,77 +664,77 @@
   <!-- Writing & Analytics -->
   <section id="writing" class="section max-w-screen-2xl mx-auto px-8 py-20">
     <div class="max-w-3xl">
-      <span class="text-xs uppercase tracking-[3px] text-zinc-500 font-medium">Writing &amp; analytics</span>
+      <span class="text-xs uppercase tracking-[3px] text-[var(--text-secondary)] font-medium">Writing &amp; analytics</span>
       <h2 class="section-header mt-2">Football analysis &amp; scouting content</h2>
-      <p class="mt-4 text-zinc-400 text-lg">I regularly publish tactical football analysis and scouting content covering player performance evaluation, tactical systems, recruitment profiling, and data-driven insights.</p>
+      <p class="mt-4 text-[var(--text-secondary)] text-lg">I regularly publish tactical football analysis and scouting content covering player performance evaluation, tactical systems, recruitment profiling, and data-driven insights.</p>
     </div>
 
     <div class="mt-10 grid md:grid-cols-2 gap-6">
-      <div class="border border-zinc-800 rounded-3xl p-8 bg-zinc-900/50">
+      <div class="border border-[#c9b8a3] rounded-3xl p-8 bg-zinc-900/50">
         <div class="flex items-center gap-x-3">
-          <i class="fa-brands fa-medium text-3xl text-zinc-400"></i>
+          <i class="fa-brands fa-medium text-3xl text-[var(--text-secondary)]"></i>
           <div>
             <div class="font-semibold">Medium</div>
-            <div class="text-sm text-zinc-400">Long-form tactical breakdowns &amp; analysis</div>
+            <div class="text-sm text-[var(--text-secondary)]">Long-form tactical breakdowns &amp; analysis</div>
           </div>
         </div>
       </div>
       
-      <div class="border border-zinc-800 rounded-3xl p-8 bg-zinc-900/50">
+      <div class="border border-[#c9b8a3] rounded-3xl p-8 bg-zinc-900/50">
         <div class="flex items-center gap-x-3">
-          <i class="fa-solid fa-newspaper text-3xl text-zinc-400"></i>
+          <i class="fa-solid fa-newspaper text-3xl text-[var(--text-secondary)]"></i>
           <div>
             <div class="font-semibold">Substack</div>
-            <div class="text-sm text-zinc-400">Recruitment reports &amp; weekly insights</div>
+            <div class="text-sm text-[var(--text-secondary)]">Recruitment reports &amp; weekly insights</div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="mt-6 text-sm text-zinc-500">
-      Metrics I regularly work with: <span class="text-zinc-400">xG • xA • PAdj • Possession chains • Tactical role profiling</span>
+    <div class="mt-6 text-sm text-[var(--text-muted)]">
+      Metrics I regularly work with: <span class="text-[var(--text-secondary)]">xG • xA • PAdj • Possession chains • Tactical role profiling</span>
     </div>
   </section>
 
   <!-- Contact -->
-  <section id="contact" class="section max-w-screen-2xl mx-auto px-8 pt-12 pb-24 border-t border-zinc-900">
+  <section id="contact" class="section max-w-screen-2xl mx-auto px-8 pt-12 pb-24 border-t border-[#c9b8a3]">
     <div class="max-w-3xl mx-auto">
       <div class="text-center">
-        <span class="text-xs uppercase tracking-[3px] text-zinc-500 font-medium">Next steps</span>
+        <span class="text-xs uppercase tracking-[3px] text-[var(--text-secondary)] font-medium">Next steps</span>
         <h2 class="section-header mt-2">Let’s build something<br>great together.</h2>
       </div>
 
-      <div class="mt-10 bg-[#1f1c1b] border border-zinc-800 rounded-3xl p-9 md:p-12">
+      <div class="mt-10 bg-[#e8dfce] border border-[#c9b8a3] rounded-3xl p-9 md:p-12">
         <div class="mb-8">
-          <div class="text-sm text-zinc-400 mb-3">I’m interested in opportunities involving:</div>
+          <div class="text-sm text-[var(--text-secondary)] mb-3">I’m interested in opportunities involving:</div>
           <div class="flex flex-wrap gap-2">
-            <span class="px-4 py-1 text-sm rounded-2xl border border-zinc-700 bg-zinc-950">Full-stack development</span>
-            <span class="px-4 py-1 text-sm rounded-2xl border border-zinc-700 bg-zinc-950">Mobile app development</span>
-            <span class="px-4 py-1 text-sm rounded-2xl border border-zinc-700 bg-zinc-950">AI-assisted systems</span>
-            <span class="px-4 py-1 text-sm rounded-2xl border border-zinc-700 bg-zinc-950">Sports technology</span>
-            <span class="px-4 py-1 text-sm rounded-2xl border border-zinc-700 bg-zinc-950">Data-driven platforms</span>
-            <span class="px-4 py-1 text-sm rounded-2xl border border-zinc-700 bg-zinc-950">Technical product design</span>
+            <span class="px-4 py-1 text-sm rounded-2xl border border-[#c9b8a3] bg-[#ede4d3]">Full-stack development</span>
+            <span class="px-4 py-1 text-sm rounded-2xl border border-[#c9b8a3] bg-[#ede4d3]">Mobile app development</span>
+            <span class="px-4 py-1 text-sm rounded-2xl border border-[#c9b8a3] bg-[#ede4d3]">AI-assisted systems</span>
+            <span class="px-4 py-1 text-sm rounded-2xl border border-[#c9b8a3] bg-[#ede4d3]">Sports technology</span>
+            <span class="px-4 py-1 text-sm rounded-2xl border border-[#c9b8a3] bg-[#ede4d3]">Data-driven platforms</span>
+            <span class="px-4 py-1 text-sm rounded-2xl border border-[#c9b8a3] bg-[#ede4d3]">Technical product design</span>
           </div>
         </div>
 
         <form id="contact-form" onsubmit="handleSubmit(event)">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label class="text-xs text-zinc-400 tracking-wider">YOUR NAME</label>
+              <label class="text-xs text-[var(--text-secondary)] tracking-wider">YOUR NAME</label>
               <input type="text" id="name" required
-                     class="mt-2 w-full bg-zinc-950 border border-zinc-800 focus:border-[#c17d5a] rounded-2xl px-5 py-3.5 outline-none transition placeholder:text-zinc-700">
+                     class="mt-2 w-full bg-[#f8f4ed] border border-[#c9b8a3] focus:border-[#c17d5a] rounded-2xl px-5 py-3.5 outline-none transition placeholder:text-zinc-700">
             </div>
             <div>
-              <label class="text-xs text-zinc-400 tracking-wider">EMAIL ADDRESS</label>
+              <label class="text-xs text-[var(--text-secondary)] tracking-wider">EMAIL ADDRESS</label>
               <input type="email" id="email" required
-                     class="mt-2 w-full bg-zinc-950 border border-zinc-800 focus:border-[#c17d5a] rounded-2xl px-5 py-3.5 outline-none transition placeholder:text-zinc-700">
+                     class="mt-2 w-full bg-[#f8f4ed] border border-[#c9b8a3] focus:border-[#c17d5a] rounded-2xl px-5 py-3.5 outline-none transition placeholder:text-zinc-700">
             </div>
           </div>
           
           <div class="mt-6">
-            <label class="text-xs text-zinc-400 tracking-wider">WHAT ARE YOU WORKING ON?</label>
+            <label class="text-xs text-[var(--text-secondary)] tracking-wider">WHAT ARE YOU WORKING ON?</label>
             <textarea id="message" rows="4" required
-                      class="mt-2 w-full resize-y bg-zinc-950 border border-zinc-800 focus:border-[#c17d5a] rounded-3xl px-5 py-4 outline-none transition placeholder:text-zinc-700"
+                      class="mt-2 w-full resize-y bg-[#f8f4ed] border border-[#c9b8a3] focus:border-[#c17d5a] rounded-3xl px-5 py-4 outline-none transition placeholder:text-zinc-700"
                       placeholder="Tell me about your project, collaboration idea, or opportunity..."></textarea>
           </div>
 
@@ -685,10 +744,9 @@
               Send message
             </button>
             
-            <div class="flex gap-x-5 text-xl text-zinc-400">
-              <a href="https://medium.com" target="_blank" class="hover:text-white transition-colors"><i class="fa-brands fa-medium"></i></a>
-              <a href="https://github.com/mxtxndx" target="_blank" class="hover:text-white transition-colors"><i class="fa-brands fa-github"></i></a>
-              <a href="https://www.linkedin.com/in/matanda-j-98a2a7133/" target="_blank" class="hover:text-white transition-colors"><i class="fa-brands fa-linkedin"></i></a>
+            <div class="flex gap-x-5 text-xl text-[var(--text-secondary)]">
+              <a href="https://github.com/mxtxndx" target="_blank" class="hover:text-[var(--text-primary)] transition-colors" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+              <a href="https://www.linkedin.com/in/matanda-j-98a2a7133/" target="_blank" class="hover:text-[var(--text-primary)] transition-colors" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
             </div>
           </div>
         </form>
@@ -699,19 +757,15 @@
         </div>
       </div>
 
-      <div class="text-center mt-9 text-sm text-zinc-500">
-        Prefer email? Reach me directly at <a href="mailto:justus.matanda.15948@studmc.kiu.ac.ug" class="underline hover:text-white">justus.matanda.15948@studmc.kiu.ac.ug</a>
+      <div class="text-center mt-9 text-sm text-[var(--text-muted)]">
+        Prefer email? Reach me directly at <a href="mailto:justus.matanda.15948@studmc.kiu.ac.ug" class="underline hover:text-[var(--text-primary)]">justus.matanda.15948@studmc.kiu.ac.ug</a>
       </div>
     </div>
   </section>
 
-  <footer class="border-t border-zinc-900 py-8">
-    <div class="max-w-screen-2xl mx-auto px-8 flex flex-col md:flex-row items-center justify-between gap-y-3 text-xs text-zinc-500">
+  <footer class="border-t border-[#c9b8a3] py-8">
+    <div class="max-w-screen-2xl mx-auto px-8 flex flex-col md:flex-row items-center justify-between gap-y-3 text-xs text-[var(--text-muted)]">
       <div>© 2026 Matanda Justus. All rights reserved.</div>
-      <div class="flex gap-x-5">
-        <a href="#" class="hover:text-zinc-400">Privacy</a>
-        <a href="#" class="hover:text-zinc-400">Colophon</a>
-      </div>
       <div class="hidden md:block">Kampala, Uganda</div>
     </div>
   </footer>
@@ -888,10 +942,92 @@
         });
       });
 
-      // Logo easter egg
+      // Logo easter egg (click logo 5 times)
       let logoClicks = 0;
-      const logo = document.querySelector('nav .rounded-xl');
+      const logo = document.querySelector('nav img');
       if (logo) {
+        logo.style.cursor = 'pointer';
+        logo.addEventListener('click', () => {
+          logoClicks++;
+          if (logoClicks === 5) {
+            logo.classList.add('!rotate-180', 'transition-transform', 'duration-700');
+            setTimeout(() => {
+              if (logo) logo.classList.remove('!rotate-180');
+              logoClicks = 0;
+            }, 900);
+          }
+        });
+      }
+
+      console.log('%c[Portfolio] Matanda Justus portfolio ready — clean, fast, and professional.', 'color:#52525b');
+    }
+
+    // Theme Toggle (Light / Dark)
+    function initThemeToggle() {
+      const toggleBtn = document.getElementById('theme-toggle');
+      const icon = document.getElementById('theme-icon');
+      const logo = document.querySelector('nav img');
+
+      if (!toggleBtn || !icon) return;
+
+      const lightLogo = 'mj-logo-dark.png';
+      const darkLogo = 'mj-logo-transparent.png';
+
+      function setTheme(isDark) {
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+          icon.classList.remove('fa-moon');
+          icon.classList.add('fa-sun');
+          if (logo) logo.src = darkLogo;
+          localStorage.setItem('theme', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          icon.classList.remove('fa-sun');
+          icon.classList.add('fa-moon');
+          if (logo) logo.src = lightLogo;
+          localStorage.setItem('theme', 'light');
+        }
+      }
+
+      // Initial theme
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+      let isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+      setTheme(isDark);
+
+      // Toggle on click
+      toggleBtn.addEventListener('click', () => {
+        isDark = !document.documentElement.classList.contains('dark');
+        setTheme(isDark);
+      });
+    }
+
+    // Boot everything
+    function initializePortfolio() {
+      initializeTailwind();
+      initNavbar();
+      initMobileMenu();
+      initScrollReveals();
+      initKeyboardShortcuts();
+      initThemeToggle();   // ← New
+
+      // Make skill pills keyboard accessible
+      document.querySelectorAll('.skill-pill').forEach(pill => {
+        pill.setAttribute('tabindex', '0');
+        pill.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            pill.classList.add('!bg-[#c17d5a]', '!border-[#a67c6a]', '!text-white');
+            setTimeout(() => pill.classList.remove('!bg-[#c17d5a]', '!border-[#a67c6a]', '!text-white'), 700);
+          }
+        });
+      });
+
+      // Logo easter egg (click logo 5 times)
+      let logoClicks = 0;
+      const logo = document.querySelector('nav img');
+      if (logo) {
+        logo.style.cursor = 'pointer';
         logo.addEventListener('click', () => {
           logoClicks++;
           if (logoClicks === 5) {
