@@ -7,6 +7,7 @@
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="favicon.png">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
@@ -119,7 +120,7 @@
   </div>
 
   <!-- Resume Content -->
-  <div class="resume-container mx-auto px-10 py-9 rounded-2xl text-[10.5pt] leading-[1.45]">
+  <div id="resume-content" class="resume-container mx-auto px-10 py-9 rounded-2xl text-[10.5pt] leading-[1.45]">
 
     <!-- Header -->
     <div class="flex justify-between items-start border-b border-zinc-200 pb-6">
@@ -263,19 +264,49 @@
       theme: { extend: {} }
     };
 
-    function downloadPDF() {
-      const btns = document.querySelectorAll('button');
-      btns.forEach(b => b.style.display = 'none');
-      
-      // Small delay so UI updates before print dialog
-      setTimeout(() => {
+    async function downloadPDF() {
+      const resume = document.getElementById('resume-content');
+      const downloadButton = document.querySelector('button[onclick="downloadPDF()"]');
+
+      if (!resume || !window.html2pdf) {
         window.print();
-        
-        // Restore buttons after print dialog closes
-        setTimeout(() => {
-          btns.forEach(b => b.style.display = '');
-        }, 1500);
-      }, 120);
+        return;
+      }
+
+      const originalLabel = downloadButton ? downloadButton.innerHTML : '';
+
+      if (downloadButton) {
+        downloadButton.disabled = true;
+        downloadButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Preparing PDF';
+      }
+
+      const options = {
+        margin: [8, 8, 8, 8],
+        filename: 'Matanda-Justus-Resume.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#f8f4ed'
+        },
+        jsPDF: {
+          unit: 'mm',
+          format: 'a4',
+          orientation: 'portrait'
+        },
+        pagebreak: {
+          mode: ['avoid-all', 'css', 'legacy']
+        }
+      };
+
+      try {
+        await html2pdf().set(options).from(resume).save();
+      } finally {
+        if (downloadButton) {
+          downloadButton.disabled = false;
+          downloadButton.innerHTML = originalLabel;
+        }
+      }
     }
 
     // Keyboard support
