@@ -4,7 +4,7 @@ A clean, elegant, and professional portfolio website for Matanda Justus.
 
 ## Personal Brand
 - Full-Stack & Mobile Developer
-- Computer Science student at Kampala International University
+- Computer Science graduate from Kampala International University
 - Specializes in React, Flutter, Supabase, and Football Analytics
 
 ## What's Included
