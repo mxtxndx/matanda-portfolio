@@ -12,7 +12,7 @@ A clean, elegant, and professional portfolio website for Matanda Justus.
 - Beautiful dark modern design with warm terracotta accents
 - Smooth scroll-reveal animations and micro-interactions
 - Fully responsive (excellent on mobile)
-- All real content: bio, projects (Hospital Management, Primary School Management, Football Scouting & Analysis), tech stack, internship, and writing platforms
+- All real content: bio, projects (Hospital Management, Primary School Management, Football Scouting & Analysis, SuperMart, RevivalFlow Wellness, and TransferPrompter), tech stack, internship, and writing platforms
 - Working contact form (demo) + keyboard shortcut (`/` to jump to contact)
 - Professional portrait included
 - Dedicated, print-optimized resume page
